@@ -1,0 +1,15 @@
+nav a, h1 {
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    background-color: rgb(244, 255, 253);
+}
+
+.navCustom {
+    background-color: #e0fcf7!important;
+}
+
+.spaced {
+    margin-right: 2%;
+}
