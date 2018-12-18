@@ -3,30 +3,61 @@ import Input from '../components/Input';
 import FormAlert from '../components/FormAlert';
 
 class NewAppointment extends Component {
-  state = {
-    formSent: false,
-    success: false,
-    appointment: {
+  constructor() {
+    super()
+    this.state = {
+      formSent: false,
+      success: false,
       name: '',
       phone: '',
       email: '',
       date: '',
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  
+
+  handleSubmit(event, errors) {
+    event.preventDefault()
+    if (errors) {
+      this.setState({
+        formSent: true,
+      })
+      return
+    }
+    this.setState({
+      formSent: true,
+      success: true,
+    })
+    console.log('A name was submitted: ' + this.state)
+    return
   }
 
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
+  changeName = (event) => {
+    this.setState({
+      name: event.target.value,
+    })
+  }
+
+  changePhone = (event) => {
+    this.setState({
+      phone: event.target.value,
+    })
+  }
+
+  changeEmail = (event) => {
+    this.setState({
+      email: event.target.value,
+    })
+  }
+
+  changeDate = (event) => {
+    this.setState({
+      date: event.target.value,
+    })
   }
 
   render() {
-    const {
-      name,
-      email,
-      phone,
-      date,
-    } = this.state.appointment
-  
     return (
       <Fragment>
         { this.state.formSent && (
@@ -38,31 +69,31 @@ class NewAppointment extends Component {
         <Input
           labelFor="name"
           labelName="Name"
-          value={name}
+          onChange={this.changeName}
           inputType="text"
           placeholder="Full name"
         />
         <Input
           labelFor="phone"
           labelName="Phone number"
-          value={phone}
+          onChange={this.changePhone}
           inputType="text"
           placeholder="Phone number"
         />
         <Input
           labelFor="email"
           labelName="Email"
-          value={email}
+          onChange={this.changeEmail}
           inputType="email"
           placeholder="Email"
         />
         <Input
           labelFor="date"
           labelName="Date"
-          value={date}
+          onChange={this.changeDate}
           inputType="datetime-local"
         />
-        <input type="submit" class="btn btn-success" value="Submit" />
+        <input type="submit" className="btn btn-success" value="Submit" />
       </form>
       </Fragment>
     );

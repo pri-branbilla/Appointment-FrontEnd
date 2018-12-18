@@ -8,8 +8,8 @@ class App extends Component {
     return (
       <div>
         <NavBar />
-        <div class="container">
-          <div class="jumbotron jumbExtra">
+        <div className="container container-margin">
+          <div className="jumbotron jumbExtra">
             <Main />
           </div>
         </div>

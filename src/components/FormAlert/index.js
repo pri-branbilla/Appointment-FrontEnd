@@ -3,15 +3,14 @@ import React, { PureComponent } from 'react';
 class FormAlert extends PureComponent {
   render() {
     const {
-        success
+        success,
+        message,
     } = this.props
-    return (( success &&
-        <div class="alert alert-success" role="alert">
-            Appointment scheduled successfully!
-        </div> )
-        ||
-        <div class="alert alert-danger" role="alert">
-            Failed to schedule appointment.
+
+    const className = success ? "alert alert-success" : "alert alert-danger" 
+    return (
+        <div className={className} role="alert">
+            {message}
         </div>
     );
   }

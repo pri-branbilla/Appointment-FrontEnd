@@ -7,18 +7,18 @@ class Input extends PureComponent {
         labelName,
         inputType,
         placeholder,
-        value,
+        onChange,
         describedBy,
         smallMessage,
     } = this.props
 
     return (
-        <div class="form-group">
-            <label for={labelFor}>{labelName}</label>
-            <input type={inputType} class="form-control" value={value} id={labelFor} aria-describedby={describedBy} placeholder={placeholder} />
+        <div className="form-group">
+            <label htmlFor={labelFor}>{labelName}</label>
+            <input type={inputType} onChange={onChange} className="form-control" d={labelFor} aria-describedby={describedBy} placeholder={placeholder} />
             {
                 smallMessage && (
-                    <small id={describedBy} class="form-text text-muted">{smallMessage}</small>
+                    <small id={describedBy} className="form-text text-muted">{smallMessage}</small>
                 )
             }
         </div>

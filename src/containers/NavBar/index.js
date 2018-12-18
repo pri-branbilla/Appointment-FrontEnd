@@ -1,34 +1,68 @@
 import React, { Component, Fragment } from 'react';
+import { isLoggedIn, logout } from '../../libs/Firebase'
 import { Link } from 'react-router-dom'
 import './styles.css'
 
+const RightNav = ({ authUser }) => (
+    authUser ? <AuthRightNav /> : <NonAuthRightNav />
+)
+
+const logoutClick = () => {
+    logout(() => {
+        console.log("LOGGED OUT")
+    })
+}
+
+const AuthRightNav = () => (
+    <Fragment>
+        <span className="navbar-text spaced">
+            <Link to="#">Available times</Link>
+        </span>
+        <span className="navbar-text spaced">
+            <Link onClick={logoutClick} to="/">Logout</Link>
+        </span>
+    </Fragment>
+)
+
+const NonAuthRightNav = () => (
+    <Fragment>
+        <span className="navbar-text spaced">
+            <Link to="/login">Admin</Link>
+        </span>
+    </Fragment>
+)
+
 class NavBar extends Component {
+    constructor() {
+        super()
+
+        this.state = {
+            currentUser: null,
+        }
+    }
+
+    componentWillMount = () => {
+        isLoggedIn((user) => this.setState({
+            currentUser: user,
+        }))
+    }
   render() {
     return (
         <Fragment>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light navCustom">
-                <Link to="/">Home</Link>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light navCustom">
+                <Link className="navbar-brand" to="/">Home</Link>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                    <Link to="/appointments/new">New appointment</Link>
+                <div className="collapse navbar-collapse" id="navbarText">
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item">
+                    <Link className="nav-link" to="/appointments/new">New appointment</Link>
                     </li>
                 </ul>
-                    <span class="navbar-text spaced">
-                    <Link to="#">Available times</Link>
-                    </span>
-                    <span class="navbar-text spaced">
-                    <Link to="#">Logout</Link>
-                    </span>
-                    <span class="navbar-text spaced">
-                    <Link to="/login">Login</Link>
-                    </span>
-                    <span class="navbar-text">
-                    <Link to="#">Register</Link>
-                    </span>
+                    <RightNav
+                        authUser={this.state.currentUser}
+                    />
                 </div>
             </nav>
         </Fragment>
