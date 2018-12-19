@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import Input from '../components/Input';
 import FormAlert from '../components/FormAlert';
+import { sendAppointment } from '../requests';
 
 class NewAppointment extends Component {
   constructor() {
     super()
     this.state = {
       formSent: false,
+      message: '',
       success: false,
       name: '',
       phone: '',
@@ -25,11 +27,19 @@ class NewAppointment extends Component {
       })
       return
     }
-    this.setState({
-      formSent: true,
-      success: true,
+    const data = {
+      name: this.state.name,
+      phone: this.state.phone,
+      email: this.state.email,
+      date: this.state.date,
+    }
+    sendAppointment(data, (error) => {
+      this.setState({
+        formSent: true,
+        message: error? "Failed to create appointment" : "Created successfully!",
+        success: error? false : true,
+      })
     })
-    console.log('A name was submitted: ' + this.state)
     return
   }
 
@@ -63,6 +73,7 @@ class NewAppointment extends Component {
         { this.state.formSent && (
           <FormAlert
             success={this.state.success}
+            message={this.state.message}
           />
         )}
         <form onSubmit={this.handleSubmit}>
