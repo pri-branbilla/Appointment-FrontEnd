@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import FormAlert from '../components/FormAlert'
 import Select from '../components/Select'
-import { buildArray, formatDate } from '../libs/utils'
+import { buildArray, formatDateToDefault } from '../libs/utils'
 
 class AvailableTime extends Component {
   constructor() {
@@ -22,7 +22,7 @@ class AvailableTime extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    formatDate(this.state)
+    const newDate = formatDateToDefault(this.state)
   }
 
 

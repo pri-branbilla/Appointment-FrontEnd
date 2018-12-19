@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import Login from './Login';
 import Home from './Home'
 import NewAppointment from './NewAppointment';
-import NewAvailableTime from './AvailableTimes';
+import NewAvailableTime from './NewAvailableTime';
 import ScheduledAppointments from './ScheduledAppointments';
 
 class Main extends Component {

@@ -1,24 +1,21 @@
 import React, { Component, Fragment } from 'react'
-import FormAlert from '../components/FormAlert'
-import Select from '../components/Select'
-import { buildArray, formatDate } from '../libs/utils'
 import { getAppointments } from '../requests';
+import ScheduledList from '../containers/ScheduledList';
 
 class ScheduledAppointments extends Component {
   constructor() {
     super()
     this.state = {
-      day: '',
-      month: '',
-      year: '',
-      hour: '',
-      minute: '',
+      scheduledList: []
     }
   }
 
   componentWillMount = () => {
     getAppointments((data) => {
       console.log(data)
+      this.setState({
+        scheduledList: data,
+      })
     })
   }
 
@@ -26,7 +23,10 @@ class ScheduledAppointments extends Component {
   render() {
     return (
       <Fragment>
-        
+        <h1>Scheduled appointments</h1>
+        <ScheduledList
+          scheduledList={this.state.scheduledList}
+        />
       </Fragment>
     );
   }

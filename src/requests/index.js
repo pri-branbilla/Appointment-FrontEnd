@@ -8,6 +8,7 @@ const defaultHeaders = {
 }
 
 const sendAppointment = (body, callback) => {
+    console.log(body)
     axios.post(defaultRoute + '/appointments/', body,
     {
         headers: defaultHeaders,
@@ -39,13 +40,25 @@ const getAppointments = (callback) => {
     })
 }
 
-const newAvailableDate = () => {
+const newAvailableDate = (body, callback) => {
     getIdToken((idToken) => {
-        
+        defaultHeaders['user_id_token'] = idToken
+        axios.post(defaultRoute + '/dates', body,
+        {
+            headers: defaultHeaders,
+        })
+        .then((response) => {
+            console.log(response)
+            callback()
+        })
+        .catch((error) => {
+            console.log(error.message)
+            callback(error)
+        })
     })
 }
 
-const deleteAvailableDate = () => {
+const scheduleDate = () => {
     getIdToken((idToken) => {
         
     })
@@ -55,5 +68,5 @@ export {
     sendAppointment,
     getAppointments,
     newAvailableDate,
-    deleteAvailableDate,
+    scheduleDate,
 }

@@ -16,10 +16,10 @@ const logoutClick = () => {
 const AuthRightNav = () => (
     <Fragment>
         <span className="navbar-text spaced">
-            <Link to="/medicalappointments">Medical appointments</Link>
+            <Link to="/medicalappointments">Scheduled appointments</Link>
         </span>
         <span className="navbar-text spaced">
-            <Link to="/newavailabletime">Available times</Link>
+            <Link to="/newavailabletime">Add new available time</Link>
         </span>
         <span className="navbar-text spaced">
             <Link onClick={logoutClick} to="/">Logout</Link>

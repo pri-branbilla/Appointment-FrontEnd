@@ -10,14 +10,14 @@ class Select extends PureComponent {
         onChange,
     } = this.props
 
-    const options = values.map(value => (
-        <option value={value}>{value}</option>
+    const options = values.map((value, i) => (
+        <option key={i+value} value={value}>{value}</option>
     ))
 
     return (
-        <div className="form-group">
+        <div className="form-group col-md-4">
             <label htmlFor={selectId}>{labelName}</label>
-            <select id={selectId} className="form-control" onChange={onChange} name={selectName} form={formId} className="form-control form-control-lg">
+            <select id={selectId} className="form-control" onChange={onChange} name={selectName} form={formId}>
                 {options}
             </select>
         </div>

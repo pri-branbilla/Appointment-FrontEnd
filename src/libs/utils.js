@@ -10,10 +10,9 @@ const buildArray = (max, min = 1) => {
     return array
 }
 
-const formatDate = (dates) => {
+const formatDateToDefault = (dates) => {
     const date = [dates.year, dates.month-1, dates.day, dates.hour, dates.minute]
-    console.log(moment(date).format())
-
+    return moment(date).format("YYYY-MM-DDTHH:mm")
 }
 
-export { buildArray, formatDate }
+export { buildArray, formatDateToDefault }

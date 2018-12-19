@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import FormAlert from '../components/FormAlert'
 import Select from '../components/Select'
-import { buildArray, formatDate } from '../libs/utils'
+import { buildArray, formatDateToDefault } from '../libs/utils'
+import { newAvailableDate } from '../requests';
 
 class NewAvailableTime extends Component {
   constructor() {
@@ -20,9 +21,26 @@ class NewAvailableTime extends Component {
     this.onChange = this.onChange.bind(this)
   }
 
-  handleSubmit(event) {
+  handleSubmit(event, errors) {
     event.preventDefault()
-    formatDate(this.state)
+    if (errors) {
+      this.setState({
+        formSent: true,
+      })
+      return
+    }
+    const bodyRequest ={
+      date: formatDateToDefault(this.state)
+    } 
+    console.log(bodyRequest)
+    newAvailableDate(bodyRequest, (error) => {
+      this.setState({
+        formSent: true,
+        message: error ? "Failed to send new date" : "Created successfully!",
+        success: error ? false : true,
+      })
+    })
+    return
   }
 
 
@@ -93,9 +111,7 @@ class NewAvailableTime extends Component {
               onChange={this.onChange}
           />
         </div>
-        <div className="row">
           <input type="submit" className="btn btn-success" value="Submit" />
-        </div>
       </form>
       </Fragment>
     );
