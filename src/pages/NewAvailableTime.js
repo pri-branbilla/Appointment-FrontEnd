@@ -3,7 +3,7 @@ import FormAlert from '../components/FormAlert'
 import Select from '../components/Select'
 import { buildArray, formatDate } from '../libs/utils'
 
-class AvailableTime extends Component {
+class NewAvailableTime extends Component {
   constructor() {
     super()
     this.state = {
@@ -96,4 +96,4 @@ class AvailableTime extends Component {
   }
 }
 
-export default AvailableTime
+export default NewAvailableTime

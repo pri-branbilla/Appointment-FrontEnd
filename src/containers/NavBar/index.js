@@ -16,7 +16,7 @@ const logoutClick = () => {
 const AuthRightNav = () => (
     <Fragment>
         <span className="navbar-text spaced">
-            <Link to="#">Available times</Link>
+            <Link to="/availabletimes">Available times</Link>
         </span>
         <span className="navbar-text spaced">
             <Link onClick={logoutClick} to="/">Logout</Link>
