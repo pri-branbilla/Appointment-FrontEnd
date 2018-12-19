@@ -1,5 +1,4 @@
-import React, { PureComponent } from 'react';
-
+import React, { PureComponent } from 'react'
 class Select extends PureComponent {
   render() {
     const {
@@ -18,7 +17,7 @@ class Select extends PureComponent {
     return (
         <div className="form-group">
             <label htmlFor={selectId}>{labelName}</label>
-            <select id={selectId} onChange={onChange} name={selectName} form={formId} className="form-control form-control-lg">
+            <select id={selectId} className="form-control" onChange={onChange} name={selectName} form={formId} className="form-control form-control-lg">
                 {options}
             </select>
         </div>

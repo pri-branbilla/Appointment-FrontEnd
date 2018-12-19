@@ -49,47 +49,53 @@ class NewAvailableTime extends Component {
           />
         )}
         <form id="dateform" onSubmit={this.handleSubmit}>
-        <Select
-            labelName="Day"
-            selectId="day"
-            formId="dateform"
-            selectName="days"
-            values={days}
-            onChange={this.onChange}
-        />
-        <Select
-            labelName="Month"
-            selectId="month"
-            formId="dateform"
-            selectName="months"
-            values={months}
-            onChange={this.onChange}
-        />
-        <Select
-            labelName="Year"
-            selectId="year"
-            formId="dateform"
-            selectName="years"
-            values={years}
-            onChange={this.onChange}
-        />
-        <Select
-            labelName="Hour"
-            selectId="hour"
-            formId="dateform"
-            selectName="hours"
-            values={hours}
-            onChange={this.onChange}
-        />
-        <Select
-            labelName="Minute"
-            selectId="minute"
-            formId="dateform"
-            selectName="minutes"
-            values={minutes}
-            onChange={this.onChange}
-        />
-        <input type="submit" className="btn btn-success" value="Submit" />
+        <div className="form-row">
+          <Select
+              labelName="Day"
+              selectId="day"
+              formId="dateform"
+              selectName="days"
+              values={days}
+              onChange={this.onChange}
+          />
+          <Select
+              labelName="Month"
+              selectId="month"
+              formId="dateform"
+              selectName="months"
+              values={months}
+              onChange={this.onChange}
+          />
+          <Select
+              labelName="Year"
+              selectId="year"
+              formId="dateform"
+              selectName="years"
+              values={years}
+              onChange={this.onChange}
+          />
+        </div>
+        <div className="form-row">
+          <Select
+              labelName="Hour"
+              selectId="hour"
+              formId="dateform"
+              selectName="hours"
+              values={hours}
+              onChange={this.onChange}
+          />
+          <Select
+              labelName="Minute"
+              selectId="minute"
+              formId="dateform"
+              selectName="minutes"
+              values={minutes}
+              onChange={this.onChange}
+          />
+        </div>
+        <div className="row">
+          <input type="submit" className="btn btn-success" value="Submit" />
+        </div>
       </form>
       </Fragment>
     );

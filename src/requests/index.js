@@ -1,4 +1,5 @@
 import defaultRoute from '../config/serverConfig'
+import { getIdToken } from '../libs/Firebase'
 import * as axios from 'axios'
 
 const defaultHeaders = {
@@ -21,6 +22,38 @@ const sendAppointment = (body, callback) => {
     })
 }
 
+const getAppointments = (callback) => {
+    getIdToken((idToken) => {
+        defaultHeaders['user_id_token'] = idToken
+        console.log(defaultHeaders)
+        axios.get(defaultRoute + '/appointments/',
+        {
+            headers: defaultHeaders,
+        })
+        .then((response) => {
+            callback(response.data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    })
+}
+
+const newAvailableDate = () => {
+    getIdToken((idToken) => {
+        
+    })
+}
+
+const deleteAvailableDate = () => {
+    getIdToken((idToken) => {
+        
+    })
+}
+
 export {
-    sendAppointment
+    sendAppointment,
+    getAppointments,
+    newAvailableDate,
+    deleteAvailableDate,
 }

@@ -10,7 +10,7 @@ const authenticate = (email, password, callback) => {
     .then(() => {
         firebase.auth().signInWithEmailAndPassword(email, password)
         .then(() => callback())
-        .catch(function(error) {
+        .catch((error) => {
             // Handle Errors here.
             // var errorCode = error.code;
             // var errorMessage = error.message;
@@ -31,13 +31,14 @@ const logout = (callback) => {
     })
 }
 
-const verifyIdToken = () => {
-    firebase.auth().currentUser.getIdToken(true)
+const getIdToken = (callback) => {
+    console.log(firebase.auth().currentUser)
+    firebase.auth().currentUser.getIdToken()
     .then((idToken) => {
-
+        callback(idToken)
     })
     .catch((error) => {
-
+        console.log(error)
     })
 }
 
@@ -50,7 +51,7 @@ const isLoggedIn = (callback) => {
 export {
     init,
     authenticate,
-    verifyIdToken,
+    getIdToken,
     logout,
     isLoggedIn,
 }
