@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
+import InputMask from 'react-input-mask'
 
 class Input extends PureComponent {
   render() {
     const {
+        mask,
         labelFor,
         labelName,
         inputType,
@@ -14,11 +16,36 @@ class Input extends PureComponent {
         min,
         max,
     } = this.props
-
+    const input = (mask) ?
+    (<InputMask
+        mask={mask}
+        min={min}
+        max={max}
+        type={inputType}
+        onChange={onChange}
+        className="form-control"
+        id={labelFor}
+        aria-describedby={describedBy}
+        value={value}
+        required
+      />)
+    :
+    (<input
+        min={min}
+        max={max}
+        type={inputType}
+        onChange={onChange}
+        className="form-control"
+        id={labelFor}
+        aria-describedby={describedBy}
+        placeholder={placeholder}
+        value={value}
+        required
+    />)
     return (
         <div className="form-group">
             <label htmlFor={labelFor}>{labelName}</label>
-            <input min={min} max={max} type={inputType} onChange={onChange} className="form-control" id={labelFor} aria-describedby={describedBy} placeholder={placeholder} value={value}/>
+            {input}
             {
                 smallMessage && (
                     <small id={describedBy} className="form-text text-muted">{smallMessage}</small>
