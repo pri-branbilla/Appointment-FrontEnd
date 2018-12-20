@@ -10,9 +10,12 @@ class NewAvailableTime extends Component {
       formSent: false,
       message: '',
       success: false,
-      day: '',
-      month: '',
-      year: '',
+      startDay: '',
+      startMonth: '',
+      startYear: '',
+      finalDay: '',
+      finalMonth: '',
+      finalYear: '',
       startHour: '',
       finishHour: '',
       step: 0,
@@ -68,10 +71,11 @@ class NewAvailableTime extends Component {
           />
         )}
         <form id="dateform" onSubmit={this.handleSubmit}>
+        From
         <div className="form-row">
           <Select
             labelName="Day"
-            selectId="day"
+            selectId="startDay"
             formId="dateform"
             selectName="days"
             values={days}
@@ -79,7 +83,7 @@ class NewAvailableTime extends Component {
           />
           <Select
             labelName="Month"
-            selectId="month"
+            selectId="startMonth"
             formId="dateform"
             selectName="months"
             values={months}
@@ -87,7 +91,34 @@ class NewAvailableTime extends Component {
           />
           <Select
             labelName="Year"
-            selectId="year"
+            selectId="startYear"
+            formId="dateform"
+            selectName="years"
+            values={years}
+            onChange={this.onChange}
+          />
+        </div>
+        To
+        <div className="form-row">
+          <Select
+            labelName="Day"
+            selectId="finalDay"
+            formId="dateform"
+            selectName="days"
+            values={days}
+            onChange={this.onChange}
+          />
+          <Select
+            labelName="Month"
+            selectId="finalMonth"
+            formId="dateform"
+            selectName="months"
+            values={months}
+            onChange={this.onChange}
+          />
+          <Select
+            labelName="Year"
+            selectId="finalYear"
             formId="dateform"
             selectName="years"
             values={years}
