@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import Input from '../components/Input';
-import FormAlert from '../components/FormAlert';
-import { sendAppointment } from '../requests';
+import { Input, FormAlert } from '../components'
+import { sendAppointment, getAvailableDate, scheduleDate } from '../requests';
+import { formatDateToBr } from '../libs/utils';
 
 class NewAppointment extends Component {
   constructor() {
@@ -13,11 +13,21 @@ class NewAppointment extends Component {
       name: '',
       phone: '',
       email: '',
+      dates: [],
       date: '',
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.onChange = this.onChange.bind(this)
   }
   
+  componentWillMount = () => {
+    getAvailableDate((availableDates) => {
+      this.setState({
+        dates: availableDates,
+      })
+    })
+  }
+
 
   handleSubmit(event, errors) {
     event.preventDefault()
@@ -33,41 +43,40 @@ class NewAppointment extends Component {
       email: this.state.email,
       date: this.state.date,
     }
-    sendAppointment(data, (error) => {
+    const scheduledDate = {
+      date: this.state.date,
+    }
+    scheduleDate(scheduledDate, (error) => {
+      if (!error) {
+        return sendAppointment(data, (error) => {
+          this.setState({
+            formSent: true,
+            message: error? "Failed to create appointment" : "Created successfully!",
+            success: error? false : true,
+          })
+        })
+      }
       this.setState({
         formSent: true,
-        message: error? "Failed to create appointment" : "Created successfully!",
-        success: error? false : true,
+        message: "Failed to create appointment",
+        success: false,
       })
     })
     return
   }
 
-  changeName = (event) => {
+  onChange (e) {
+    const name = e.target.id
+    console.log(e.target.id)
     this.setState({
-      name: event.target.value,
+        [name]: e.target.value,
     })
-  }
-
-  changePhone = (event) => {
-    this.setState({
-      phone: event.target.value,
-    })
-  }
-
-  changeEmail = (event) => {
-    this.setState({
-      email: event.target.value,
-    })
-  }
-
-  changeDate = (event) => {
-    this.setState({
-      date: event.target.value,
-    })
-  }
+}
 
   render() {
+    const options = this.state.dates.map((value, i) => (
+      <option key={i} value={value.schDate}>{formatDateToBr(value.schDate)}</option>
+    ))
     return (
       <Fragment>
         { this.state.formSent && (
@@ -80,30 +89,36 @@ class NewAppointment extends Component {
         <Input
           labelFor="name"
           labelName="Name"
-          onChange={this.changeName}
+          onChange={this.onChange}
           inputType="text"
           placeholder="Full name"
         />
         <Input
+          mask="(99) 99999-9999"
           labelFor="phone"
           labelName="Phone number"
-          onChange={this.changePhone}
-          inputType="text"
-          placeholder="Phone number"
+          onChange={this.onChange}
+          inputType="tel"
         />
         <Input
           labelFor="email"
           labelName="Email"
-          onChange={this.changeEmail}
+          onChange={this.onChange}
           inputType="email"
-          placeholder="Email"
         />
-        <Input
-          labelFor="date"
-          labelName="Date"
-          onChange={this.changeDate}
-          inputType="datetime-local"
-        />
+        <div className="form-group col-md-4">
+            <label htmlFor="date">Date</label>
+            <select
+              id="date"
+              className="form-control"
+              onChange={this.onChange}
+              name="Date"
+              form="appointment"
+            >
+            <option value=""></option>
+                {options}
+            </select>
+        </div>
         <input type="submit" className="btn btn-success" value="Submit" />
       </form>
       </Fragment>

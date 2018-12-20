@@ -16,7 +16,7 @@ class ScheduledItem extends PureComponent {
                 <li className="list-group-item active">{name}</li>
                 <li className="list-group-item"><b>Phone:</b> {phone}</li>
                 <li className="list-group-item"><b>Email:</b> {email}</li>
-                <li className="list-group-item"><b>Date:</b> {date}</li>
+                <li className="list-group-item"><b>Time:</b> {date}</li>
             </ul>
         </div>
     );

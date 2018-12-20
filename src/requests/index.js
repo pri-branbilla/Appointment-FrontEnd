@@ -58,10 +58,32 @@ const newAvailableDate = (body, callback) => {
     })
 }
 
-const scheduleDate = () => {
-    getIdToken((idToken) => {
-        
+const scheduleDate = (body, callback) => {
+    axios.patch(defaultRoute + '/dates/update', body,
+    {
+        headers: defaultHeaders,
     })
+    .then((response) => {
+        console.log(response)
+        callback()
+    })
+    .catch((error) => {
+        console.log(error.message)
+        callback(error)
+    })
+}
+
+const getAvailableDate = (callback) => {
+    axios.get(defaultRoute + '/dates/',
+        {
+            headers: defaultHeaders,
+        })
+        .then((response) => {
+            callback(response.data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
 }
 
 export {
@@ -69,4 +91,5 @@ export {
     getAppointments,
     newAvailableDate,
     scheduleDate,
+    getAvailableDate,
 }

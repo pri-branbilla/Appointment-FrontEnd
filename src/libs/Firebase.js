@@ -33,6 +33,12 @@ const logout = (callback) => {
 
 const getIdToken = (callback) => {
     console.log(firebase.auth().currentUser)
+    if (!firebase.auth().currentUser) {
+        const error = { 
+            message: 'User not authenticated',
+        }
+        return callback(error)
+    }
     firebase.auth().currentUser.getIdToken()
     .then((idToken) => {
         callback(idToken)

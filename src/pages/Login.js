@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import Input from '../components/Input';
-import FormAlert from '../components/FormAlert';
+import { Input, FormAlert } from '../components'
 import { authenticate } from '../libs/Firebase'
 
 class Login extends Component {
@@ -24,6 +23,9 @@ class Login extends Component {
         success: error ? false : true,
         message: error ? error.message : "Logged in!"
       })
+      if (!error) {
+        this.props.history.push('/medicalappointments')
+      }
     })
   }
 

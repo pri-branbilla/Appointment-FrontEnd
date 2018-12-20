@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import FormAlert from '../components/FormAlert'
-import Select from '../components/Select'
+import { Select, FormAlert, Input } from '../components'
 import { buildArray, formatDateToDefault } from '../libs/utils'
-import { newAvailableDate } from '../requests';
+import { newAvailableDate } from '../requests'
 
 class NewAvailableTime extends Component {
   constructor() {
@@ -14,8 +13,9 @@ class NewAvailableTime extends Component {
       day: '',
       month: '',
       year: '',
-      hour: '',
-      minute: '',
+      startHour: '',
+      finishHour: '',
+      step: 0,
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -30,7 +30,9 @@ class NewAvailableTime extends Component {
       return
     }
     const bodyRequest ={
-      date: formatDateToDefault(this.state)
+      startDate: formatDateToDefault(this.state, this.state.startHour),
+      finalDate: formatDateToDefault(this.state, this.state.finishHour),
+      step: Number(this.state.step)
     } 
     console.log(bodyRequest)
     newAvailableDate(bodyRequest, (error) => {
@@ -56,8 +58,7 @@ class NewAvailableTime extends Component {
     const days = buildArray(31)
     const months = buildArray(12)
     const years = buildArray(2021, 2018)
-    const hours = buildArray(23, 0)
-    const minutes = buildArray(59, 0)
+    const steps = [10, 20, 30]
     return (
       <Fragment>
         { this.state.formSent && (
@@ -69,46 +70,52 @@ class NewAvailableTime extends Component {
         <form id="dateform" onSubmit={this.handleSubmit}>
         <div className="form-row">
           <Select
-              labelName="Day"
-              selectId="day"
-              formId="dateform"
-              selectName="days"
-              values={days}
-              onChange={this.onChange}
+            labelName="Day"
+            selectId="day"
+            formId="dateform"
+            selectName="days"
+            values={days}
+            onChange={this.onChange}
           />
           <Select
-              labelName="Month"
-              selectId="month"
-              formId="dateform"
-              selectName="months"
-              values={months}
-              onChange={this.onChange}
+            labelName="Month"
+            selectId="month"
+            formId="dateform"
+            selectName="months"
+            values={months}
+            onChange={this.onChange}
           />
           <Select
-              labelName="Year"
-              selectId="year"
-              formId="dateform"
-              selectName="years"
-              values={years}
-              onChange={this.onChange}
+            labelName="Year"
+            selectId="year"
+            formId="dateform"
+            selectName="years"
+            values={years}
+            onChange={this.onChange}
           />
         </div>
         <div className="form-row">
-          <Select
-              labelName="Hour"
-              selectId="hour"
-              formId="dateform"
-              selectName="hours"
-              values={hours}
-              onChange={this.onChange}
+          <Input
+            mask="99:99"
+            labelFor="startHour"
+            labelName="Start at"
+            onChange={this.onChange}
+            inputType="text"
+          />
+          <Input
+            mask="99:99"
+            labelFor="finishHour"
+            labelName="Finish at"
+            onChange={this.onChange}
+            inputType="text"
           />
           <Select
-              labelName="Minute"
-              selectId="minute"
-              formId="dateform"
-              selectName="minutes"
-              values={minutes}
-              onChange={this.onChange}
+            labelName="Interval (minutes)"
+            selectId="step"
+            formId="dateform"
+            selectName="setps"
+            values={steps}
+            onChange={this.onChange}
           />
         </div>
           <input type="submit" className="btn btn-success" value="Submit" />

@@ -17,7 +17,14 @@ class Select extends PureComponent {
     return (
         <div className="form-group col-md-4">
             <label htmlFor={selectId}>{labelName}</label>
-            <select id={selectId} className="form-control" onChange={onChange} name={selectName} form={formId}>
+            <select
+                id={selectId}
+                className="form-control"
+                onChange={onChange}
+                name={selectName}
+                form={formId}
+            >
+            <option value=""></option>
                 {options}
             </select>
         </div>
