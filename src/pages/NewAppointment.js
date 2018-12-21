@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Input, FormAlert } from '../components'
+import { Input, FormAlert, Loading } from '../components'
 import { sendAppointment, getAvailableDate, scheduleDate } from '../requests';
 import { formatDateToBr } from '../libs/utils';
 
@@ -7,6 +7,7 @@ class NewAppointment extends Component {
   constructor() {
     super()
     this.state = {
+      loading: true,
       formSent: false,
       message: '',
       success: false,
@@ -24,6 +25,7 @@ class NewAppointment extends Component {
     getAvailableDate((availableDates) => {
       this.setState({
         dates: availableDates,
+        loading: false,
       })
     })
   }
@@ -65,15 +67,7 @@ class NewAppointment extends Component {
     return
   }
 
-  onChange (e) {
-    const name = e.target.id
-    console.log(e.target.id)
-    this.setState({
-        [name]: e.target.value,
-    })
-}
-
-  render() {
+  renderForm = () => {
     const options = this.state.dates.map((value, i) => (
       <option key={i} value={value.schDate}>{formatDateToBr(value.schDate)}</option>
     ))
@@ -123,6 +117,18 @@ class NewAppointment extends Component {
       </form>
       </Fragment>
     );
+  }
+
+  onChange (e) {
+    const name = e.target.id
+    console.log(e.target.id)
+    this.setState({
+        [name]: e.target.value,
+    })
+}
+
+  render = () => {
+    return this.state.loading ? <Loading /> : this.renderForm()
   }
 }
 
