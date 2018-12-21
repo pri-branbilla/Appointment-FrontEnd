@@ -2,8 +2,14 @@ import React, { Component, Fragment } from 'react'
 import { Select, FormAlert, Input, Forbidden, Loading } from '../components'
 import { buildArray, formatOnlyDate } from '../libs/utils'
 import { newAvailableDate } from '../requests'
-import { isLoggedIn } from '../libs/Firebase';
+import { isLoggedIn } from '../libs/Firebase'
 
+const sentMessages = {
+  greaterFinishDate: "Your final date must be greater than the start date.",
+  greaterFinishTime: "Your final appointment time must be greater than the start time.",
+  failSend: "Failed to send new available dates.",
+  success: "Created successfully!",
+}
 class NewAvailableTime extends Component {
   constructor() {
     super()
@@ -37,14 +43,38 @@ class NewAvailableTime extends Component {
     })
   }
 
+  dateInputError = (startDate, finalDate) => {
+    let errorMessage
+    if (formatOnlyDate(finalDate) < formatOnlyDate(startDate)) {
+      errorMessage = sentMessages.greaterFinishDate
+    } else {
+      return false
+    }
+    this.setState({
+      formSent: true,
+      success: false,
+      message: errorMessage,
+    })
+    return true
+  }
+
+  timeInputError = (startTime, finishTime) => {
+    let errorMessage
+    if (startTime > finishTime) {
+      errorMessage = sentMessages.greaterFinishTime
+    } else {
+      return false
+    }
+    this.setState({
+      formSent: true,
+      success: false,
+      message: errorMessage,
+    })
+    return true
+  }
+
   handleSubmit(event, errors) {
     event.preventDefault()
-    if (errors) {
-      this.setState({
-        formSent: true,
-      })
-      return
-    }
     const startDate = {
       day: this.state.startDay,
       month: this.state.startMonth,
@@ -54,6 +84,14 @@ class NewAvailableTime extends Component {
       day: this.state.finalDay,
       month: this.state.finalMonth,
       year: this.state.finalYear
+    }
+    if (errors
+      || this.dateInputError(startDate, finalDate)
+      || this.timeInputError(this.state.startHour, this.state.finishHour)) {
+      this.setState({
+        formSent: true,
+      })
+      return
     }
     const bodyRequest = {
       startDate: formatOnlyDate(startDate),
@@ -65,9 +103,10 @@ class NewAvailableTime extends Component {
     } 
     console.log(bodyRequest)
     newAvailableDate(bodyRequest, (error) => {
+      console.log(error)
       this.setState({
         formSent: true,
-        message: error ? "Failed to send new date" : "Created successfully!",
+        message: error ? sentMessages.failSend : sentMessages.success,
         success: error ? false : true,
       })
     })
@@ -99,6 +138,7 @@ class NewAvailableTime extends Component {
           selectName="days"
           values={days}
           onChange={this.onChange}
+          required
         />
         <Select
           labelName="Month"
@@ -107,6 +147,7 @@ class NewAvailableTime extends Component {
           selectName="months"
           values={months}
           onChange={this.onChange}
+          required
         />
         <Select
           labelName="Year"
@@ -115,6 +156,7 @@ class NewAvailableTime extends Component {
           selectName="years"
           values={years}
           onChange={this.onChange}
+          required
         />
       </div>
       <p className="font-weight-bold">To</p>
@@ -126,6 +168,7 @@ class NewAvailableTime extends Component {
           selectName="days"
           values={days}
           onChange={this.onChange}
+          required
         />
         <Select
           labelName="Month"
@@ -134,6 +177,7 @@ class NewAvailableTime extends Component {
           selectName="months"
           values={months}
           onChange={this.onChange}
+          required
         />
         <Select
           labelName="Year"
@@ -142,6 +186,7 @@ class NewAvailableTime extends Component {
           selectName="years"
           values={years}
           onChange={this.onChange}
+          required
         />
       </div>
       <p className="font-weight-bold">Repeat every:</p>

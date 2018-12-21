@@ -3,6 +3,11 @@ import { Input, FormAlert, Loading } from '../components'
 import { sendAppointment, getAvailableDate, scheduleDate } from '../requests';
 import { formatDateToBr } from '../libs/utils';
 
+const sentMessages = {
+  appointmentCreation: "Failed to create appointment, try again later.",
+  scheduleDate: "Failed to schedule in this date, try again later.",
+  success: "Scheduled appointment successfully!",
+}
 class NewAppointment extends Component {
   constructor() {
     super()
@@ -20,14 +25,18 @@ class NewAppointment extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
   }
-  
-  componentWillMount = () => {
+
+  updateDates = () => {
     getAvailableDate((availableDates) => {
       this.setState({
         dates: availableDates,
         loading: false,
       })
     })
+  }
+  
+  componentWillMount = () => {
+    this.updateDates()
   }
 
 
@@ -53,14 +62,18 @@ class NewAppointment extends Component {
         return sendAppointment(data, (error) => {
           this.setState({
             formSent: true,
-            message: error? "Failed to create appointment" : "Created successfully!",
+            message: error? sentMessages.appointmentCreation : sentMessages.success,
             success: error? false : true,
           })
+          if (!error) {
+            this.updateDates()
+          }
         })
       }
+      console.log(error)
       this.setState({
         formSent: true,
-        message: "Failed to create appointment",
+        message: sentMessages.scheduleDate,
         success: false,
       })
     })

@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 class Select extends PureComponent {
   render() {
     const {
+        required,
         labelName,
         selectId,
         formId,
@@ -23,6 +24,7 @@ class Select extends PureComponent {
                 onChange={onChange}
                 name={selectName}
                 form={formId}
+                required={required}
             >
             <option value=""></option>
                 {options}
