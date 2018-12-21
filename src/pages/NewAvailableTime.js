@@ -9,6 +9,7 @@ class NewAvailableTime extends Component {
     this.state = {
       formSent: false,
       message: '',
+      stepDays: 0,
       success: false,
       startDay: '',
       startMonth: '',
@@ -71,7 +72,7 @@ class NewAvailableTime extends Component {
           />
         )}
         <form id="dateform" onSubmit={this.handleSubmit}>
-        From
+        <p className="font-weight-bold">From</p>
         <div className="form-row">
           <Select
             labelName="Day"
@@ -98,7 +99,7 @@ class NewAvailableTime extends Component {
             onChange={this.onChange}
           />
         </div>
-        To
+        <p className="font-weight-bold">To</p>
         <div className="form-row">
           <Select
             labelName="Day"
@@ -125,6 +126,21 @@ class NewAvailableTime extends Component {
             onChange={this.onChange}
           />
         </div>
+        <p className="font-weight-bold">Repeat every:</p>
+        <div className="form-group col-md-4">
+            <select
+              id="stepDays"
+              className="form-control"
+              onChange={this.onChange}
+              name="stepDays"
+              form="dateform"
+            >
+            <option value=""></option>
+            <option value={7}>1 week</option>
+            <option value={14}>2 weeks</option>
+            </select>
+        </div>
+        <p className="font-weight-bold">Time</p>
         <div className="form-row">
           <Input
             mask="99:99"
