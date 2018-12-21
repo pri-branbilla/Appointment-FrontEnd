@@ -33,9 +33,20 @@ class NewAvailableTime extends Component {
       })
       return
     }
-    const bodyRequest ={
-      startDate: formatDateToDefault(this.state, this.state.startHour),
-      finalDate: formatDateToDefault(this.state, this.state.finishHour),
+    const startDate = {
+      day: this.state.startDay,
+      month: this.state.startMonth,
+      year: this.state.startYear
+    }
+    const finalDate = {
+      day: this.state.finalDay,
+      month: this.state.finalMonth,
+      year: this.state.finalYear
+    }
+    const bodyRequest = {
+      startDate: formatDateToDefault(startDate, this.state.startHour),
+      finalDate: formatDateToDefault(startDate, this.state.finishHour),
+      daysStep: Number(this.state.daysStep),
       step: Number(this.state.step)
     } 
     console.log(bodyRequest)
@@ -143,14 +154,14 @@ class NewAvailableTime extends Component {
         <p className="font-weight-bold">Time</p>
         <div className="form-row">
           <Input
-            mask="99:99"
+            mask="99:00"
             labelFor="startHour"
             labelName="Start at"
             onChange={this.onChange}
             inputType="text"
           />
           <Input
-            mask="99:99"
+            mask="99:00"
             labelFor="finishHour"
             labelName="Finish at"
             onChange={this.onChange}
