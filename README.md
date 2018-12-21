@@ -1,8 +1,41 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Appointment site
 
-## Available Scripts
+A React platform to schedule new appointments and add new available dates for your patients.
 
-In the project directory, you can run:
+## First steps
+
+This project has two files in src/config that are required and you'll need to add if you want to test it locally.
+
+### `firebaseConfig.js`
+
+You need to create a Firebase project. After that, add your Firebase config to this file.
+
+```
+const firebaseConfig = {
+    apiKey: "xxx",
+    authDomain: "xxxx",
+    databaseURL: "xxx",
+    projectId: "xxx",
+    storageBucket: "xxxx",
+    messagingSenderId: "xxxx"
+}
+
+export default firebaseConfig
+```
+
+### `serverConfig.js`
+
+Contains the url for the API. Just one line:
+
+`
+export default 'https://yoururl.com'
+`
+
+## NPM setup
+
+First of all, run `npm install` to install the packages.
+
+After that, just run `npm start`.
 
 ### `npm start`
 
