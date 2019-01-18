@@ -1,4 +1,4 @@
-# Appointment site
+# Site for medical appointments
 
 A React platform to schedule new appointments and add new available dates for your patients.
 
